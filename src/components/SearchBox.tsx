@@ -13,6 +13,7 @@ const SearchBoxInput = styled.input`
   padding: 0.4rem 0.6rem;
   max-width: 700px;
   width: 100%;
+  margin: 0 1rem;
   margin-bottom: 2rem;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
   transition: 0.2s ease-in-out all;
