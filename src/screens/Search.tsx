@@ -26,7 +26,7 @@ export const Search: React.FC = () => {
         <GenreBox />
       </FlexCenter>
       <FlexCenter>
-        {!!searchTitle && loading && <Loading />}
+        {!!searchTitle && loading && <Loading>Loading...</Loading>}
         {!!error && (
           <Error>
             <strong>Error: </strong> {error}
