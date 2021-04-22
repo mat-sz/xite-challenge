@@ -43,7 +43,7 @@ export const SearchResults: React.FC = () => {
       </SearchResultsCount>
       <SearchResultsGrid>
         {searchResults.map(video => (
-          <SearchResult video={video} />
+          <SearchResult video={video} key={video.id} />
         ))}
       </SearchResultsGrid>
     </>

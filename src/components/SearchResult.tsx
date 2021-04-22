@@ -17,6 +17,8 @@ const SearchResultWrapper = styled.div<{ background: string }>`
   :hover {
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.4);
     filter: grayscale(0%);
+    z-index: 999;
+    transform: scale3d(1.1, 1.1, 1);
   }
 `;
 

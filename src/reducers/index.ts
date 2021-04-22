@@ -79,7 +79,10 @@ export function applicationState(state = initialState, action: ActionModel) {
   ) {
     newState.searchResults = newState.videos.filter(video => {
       if (
-        !video.title.toString().toLowerCase().includes(newState.searchTitle)
+        !video.title
+          .toString()
+          .toLowerCase()
+          .includes(newState.searchTitle.toLowerCase())
       ) {
         return false;
       }
