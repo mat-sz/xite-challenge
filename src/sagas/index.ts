@@ -1,4 +1,4 @@
-import { put, takeEvery, select, call } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import { setDataAction, setErrorAction } from '../actions/data';
 import { DataModel } from '../types/Models';
 

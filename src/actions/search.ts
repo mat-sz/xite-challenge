@@ -15,6 +15,13 @@ export function setSearchGenreIdsAction(genreIds: number[]): ActionModel {
   };
 }
 
+export function toggleGenreIdAction(genreId: number): ActionModel {
+  return {
+    type: ActionType.TOGGLE_GENRE_ID,
+    value: genreId,
+  };
+}
+
 export function setSearchYearAction(year?: number): ActionModel {
   return {
     type: ActionType.SET_SEARCH_YEAR,

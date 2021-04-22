@@ -4,6 +4,7 @@ import { VideoModel } from '../types/Models';
 
 const SearchResultWrapper = styled.div<{ background: string }>`
   background: url(${props => props.background});
+  background-color: ${props => props.theme.secondary};
   background-size: cover;
   background-position: center center;
   position: relative;
@@ -31,6 +32,8 @@ const SearchResultInfo = styled.div`
   right: 0;
   padding: 1rem;
   pointer-events: none;
+  user-select: none;
+  padding-top: 2rem;
 
   h2,
   h3 {

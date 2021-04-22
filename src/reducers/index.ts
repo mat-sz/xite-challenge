@@ -51,11 +51,32 @@ export function applicationState(state = initialState, action: ActionModel) {
     case ActionType.SET_SEARCH_YEAR:
       newState.searchYear = action.value;
       break;
+    case ActionType.TOGGLE_GENRE_ID:
+      const genreId = action.value as number;
+
+      if (!newState.searchGenreIds) {
+        newState.searchGenreIds = [];
+      }
+
+      if (newState.searchGenreIds.includes(genreId)) {
+        newState.searchGenreIds = newState.searchGenreIds.filter(
+          id => id !== genreId
+        );
+      } else {
+        newState.searchGenreIds = [...newState.searchGenreIds, genreId];
+      }
+      break;
     default:
       return state;
   }
 
-  if (newState.videos && newState.videos.length > 0 && newState.searchTitle) {
+  if (
+    newState.videos &&
+    newState.videos.length > 0 &&
+    (newState.searchTitle ||
+      newState.searchGenreIds?.length ||
+      newState.searchYear)
+  ) {
     newState.searchResults = newState.videos.filter(video => {
       if (
         !video.title.toString().toLowerCase().includes(newState.searchTitle)

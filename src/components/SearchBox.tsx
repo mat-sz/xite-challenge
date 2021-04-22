@@ -6,7 +6,7 @@ import { StateType } from '../reducers';
 
 const SearchBoxInput = styled.input`
   color: ${props => props.theme.text};
-  border: 1px solid ${props => props.theme.secondary};
+  border: 2px solid ${props => props.theme.secondary};
   border-bottom-color: ${props => props.theme.primary};
   background: ${props => props.theme.secondary};
   font-size: 1.5rem;

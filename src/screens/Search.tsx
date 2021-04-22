@@ -9,6 +9,7 @@ import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 import { StateType } from '../reducers';
 import { SearchResults } from '../components/SearchResults';
+import { GenreBox } from '../components/GenreBox';
 
 export const Search: React.FC = () => {
   const searchTitle = useSelector((state: StateType) => state.searchTitle);
@@ -20,6 +21,9 @@ export const Search: React.FC = () => {
       <Logo />
       <FlexCenter>
         <SearchBox />
+      </FlexCenter>
+      <FlexCenter>
+        <GenreBox />
       </FlexCenter>
       <FlexCenter>
         {!!searchTitle && loading && <Loading />}
