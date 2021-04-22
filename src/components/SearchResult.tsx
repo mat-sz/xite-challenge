@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { VideoModel } from '../types/Models';
 
-const SearchResultWrapper = styled.div<{ background: string }>`
+const SearchResultWrapper = styled(Link)<{ background: string }>`
   background: url(${props => props.background});
   background-color: ${props => props.theme.secondary};
+  color: ${props => props.theme.text};
   background-size: cover;
   background-position: center center;
   position: relative;
@@ -13,12 +15,22 @@ const SearchResultWrapper = styled.div<{ background: string }>`
   filter: grayscale(50%);
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
   transition: 0.2s ease-in-out all;
+  animation: fadeIn 0.5s;
 
   :hover {
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.4);
     filter: grayscale(0%);
     z-index: 999;
     transform: scale3d(1.1, 1.1, 1);
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 `;
 
@@ -36,6 +48,7 @@ const SearchResultInfo = styled.div`
   pointer-events: none;
   user-select: none;
   padding-top: 2rem;
+  text-decoration: none;
 
   h2,
   h3 {
@@ -50,7 +63,7 @@ export interface SearchResultProps {
 
 export const SearchResult: React.FC<SearchResultProps> = ({ video }) => {
   return (
-    <SearchResultWrapper background={video.image_url}>
+    <SearchResultWrapper to={`/video/${video.id}`} background={video.image_url}>
       <SearchResultInfo>
         <h2>{video.artist}</h2>
         <h3>{video.title}</h3>
