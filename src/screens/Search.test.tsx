@@ -88,4 +88,25 @@ describe('Search', () => {
       expect(titleElements.length).toBe(1);
     });
   });
+
+  it('displays errors', async () => {
+    const mock = fetchMock.mockRejectOnce();
+
+    const store: StoreType = newStore();
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Search />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(mock).toBeCalled();
+
+    await act(async () => {
+      const errorElement = await screen.findByText(/Error/i);
+      expect(errorElement).not.toBeUndefined();
+    });
+  });
 });
