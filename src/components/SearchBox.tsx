@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setSearchTitleAction } from '../actions/search';
 import { StateType } from '../reducers';
+import { useDebounce } from '../useDebounce';
 
 const SearchBoxInput = styled.input`
   color: ${props => props.theme.text};
@@ -26,18 +27,25 @@ const SearchBoxInput = styled.input`
 
 export const SearchBox: React.FC = () => {
   const searchTitle = useSelector((state: StateType) => state.searchTitle);
+  const [value, setValue] = useState(searchTitle);
+  const debouncedValue = useDebounce(value, 250);
+
   const dispatch = useDispatch();
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(setSearchTitleAction(e.target.value));
+      setValue(e.target.value);
     },
-    [dispatch]
+    [setValue]
   );
+
+  useEffect(() => {
+    dispatch(setSearchTitleAction(debouncedValue));
+  }, [debouncedValue, dispatch]);
 
   return (
     <SearchBoxInput
-      value={searchTitle}
+      value={value}
       onChange={onChange}
       placeholder="Start typing to search..."
     />
