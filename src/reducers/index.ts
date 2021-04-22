@@ -78,11 +78,10 @@ export function applicationState(state = initialState, action: ActionModel) {
       newState.searchYear)
   ) {
     newState.searchResults = newState.videos.filter(video => {
+      const lowerCaseSearchTitle = newState.searchTitle.toLowerCase();
       if (
-        !video.title
-          .toString()
-          .toLowerCase()
-          .includes(newState.searchTitle.toLowerCase())
+        !video.title.toString().toLowerCase().includes(lowerCaseSearchTitle) &&
+        !video.artist.toString().toLowerCase().includes(lowerCaseSearchTitle)
       ) {
         return false;
       }

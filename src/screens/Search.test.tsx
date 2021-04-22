@@ -26,20 +26,42 @@ describe('Search', () => {
       </Provider>
     );
 
+    expect(mock).toBeCalled();
+
     await act(async () => {
       const textInput = await screen.findByPlaceholderText(/search/i);
-
       fireEvent.change(textInput, {
         target: { value: 'TEST' },
       });
+
+      const titleElements = await screen.findAllByText(/TEST/i);
+      expect(titleElements.length).toBe(1);
     });
+  });
+
+  it('filters by artist name', async () => {
+    const mock = fetchMock.mockOnce(JSON.stringify(mockData));
+
+    const store: StoreType = newStore();
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Search />
+        </MemoryRouter>
+      </Provider>
+    );
 
     expect(mock).toBeCalled();
 
     await act(async () => {
-      const titleElements = await screen.findAllByText(/TEST/i);
+      const textInput = await screen.findByPlaceholderText(/search/i);
+      fireEvent.change(textInput, {
+        target: { value: 'QWERTY' },
+      });
 
-      expect(titleElements.length).toBe(1);
+      const titleElements = await screen.findAllByText(/QWERTY/i);
+      expect(titleElements.length).toBe(2);
     });
   });
 
@@ -56,17 +78,13 @@ describe('Search', () => {
       </Provider>
     );
 
-    await act(async () => {
-      const genreDiv = await screen.findByText(/ABC/i);
-
-      genreDiv.click();
-    });
-
     expect(mock).toBeCalled();
 
     await act(async () => {
-      const titleElements = await screen.findAllByText(/TEST/i);
+      const genreDiv = await screen.findByText(/ABC/i);
+      genreDiv.click();
 
+      const titleElements = await screen.findAllByText(/TEST/i);
       expect(titleElements.length).toBe(1);
     });
   });
