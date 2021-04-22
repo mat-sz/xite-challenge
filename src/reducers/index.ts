@@ -12,10 +12,15 @@ export interface StateType {
   error?: string;
   videos?: VideoModel[];
   genres?: GenreModel[];
+  searchTitle: string;
+  searchGenreIds?: number[];
+  searchYear?: number;
+  searchResults?: VideoModel[];
 }
 
 let initialState: StateType = {
   loading: true,
+  searchTitle: '',
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -37,8 +42,43 @@ export function applicationState(state = initialState, action: ActionModel) {
       newState.error = action.value as string;
       newState.loading = false;
       break;
+    case ActionType.SET_SEARCH_TITLE:
+      newState.searchTitle = action.value;
+      break;
+    case ActionType.SET_SEARCH_GENRE_IDS:
+      newState.searchGenreIds = action.value;
+      break;
+    case ActionType.SET_SEARCH_YEAR:
+      newState.searchYear = action.value;
+      break;
     default:
       return state;
+  }
+
+  if (newState.videos && newState.videos.length > 0 && newState.searchTitle) {
+    newState.searchResults = newState.videos.filter(video => {
+      if (
+        !video.title.toString().toLowerCase().includes(newState.searchTitle)
+      ) {
+        return false;
+      }
+
+      if (
+        newState.searchGenreIds &&
+        newState.searchGenreIds.length > 0 &&
+        !newState.searchGenreIds.includes(video.genre_id)
+      ) {
+        return false;
+      }
+
+      if (newState.searchYear && video.release_year !== newState.searchYear) {
+        return false;
+      }
+
+      return true;
+    });
+  } else {
+    newState.searchResults = undefined;
   }
 
   return newState;
